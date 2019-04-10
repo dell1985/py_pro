@@ -30,7 +30,7 @@ for row in ymd:
     #取日期部分
     aaa=aaa[2:10]
     url_a = "http://www.shfe.com.cn/data/dailydata/kx/pm"
-    print(aaa)
+
     #拼接成下载json数据的地址，每个地址代表一天
     url1 = url_a + aaa + ".dat"
     print(url1)
@@ -42,22 +42,20 @@ for row in ymd:
     }
 
     jsonbj1 = json.loads(requests.get(url1, headers=headers).text)
-
+    # 期货交易排名放在pm1.csv
     for i1 in jsonbj1['o_cursor']:
         with open('pm1.csv', 'a') as f:
             f.write(data0 + ',' + str(i1['RANK']) + ',' + i1['PARTICIPANTABBR1'] + ',' + i1['PRODUCTNAME'] + ',' + i1[
                 'INSTRUMENTID'] + ',' + str(i1['CJ1']) + ',' + str(i1['CJ1_CHG']) + '\n')
 
-    # # 期货持多仓保存在pm2.csv
+    # 期货持多仓量变化保存在 pm2.csv
     for i2 in jsonbj1['o_cursor']:
         with open('pm2.csv', 'a') as f:
             f.write(data0 + ',' + str(i2['RANK']) + ',' + i2['PARTICIPANTABBR2'] + ',' + i2['PRODUCTNAME'] + ',' + i2[
                 'INSTRUMENTID'] + ',' + str(i2['CJ2']) + ',' + str(i2['CJ2_CHG']) + '\n')
 
-    # 期货持多仓量变化记录在 qh2.csv
+    # 期货持空仓量变化保存在 pm3.csv
     for i3 in jsonbj1['o_cursor']:
         with open('pm3.csv', 'a') as f:
             f.write(data0 + ',' + str(i3['RANK']) + ',' + i3['PARTICIPANTABBR3'] + ',' + i3['PRODUCTNAME'] + ',' + i3[
                 'INSTRUMENTID'] + ',' + str(i3['CJ3']) + ',' + str(i3['CJ3_CHG']) + '\n')
-
-    # 期货持空仓量变化记录在 pm3csv
