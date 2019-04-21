@@ -8,11 +8,11 @@ import requests
 # 文件初始化，写入表头
 # 当日交易数据，kx.csv
 
-with open('kx.csv', 'w') as f:
+with open('data/kx.csv', 'w') as f:
     f.write('日期,期货名称,交割月份,前结算,今开盘,最高价,最低价,收盘价,结算参考价,涨跌1,涨跌2,成交手,持仓手数,增减量' + '\n')
 
 # 2019A.csv里是2018年至今的交易日历
-ymd = csv.reader(open("2019A.csv"))
+ymd = csv.reader(open("data0/2019A.csv"))
 
 for row in ymd:
 
@@ -21,7 +21,7 @@ for row in ymd:
     # 取日期部分
     aaa = aaa[2:10]
     url_a = "http://www.shfe.com.cn/data/dailydata/kx/kx"
-    print(aaa)
+
     # 拼接成下载json数据的地址，每个地址代表一天
     url1 = url_a + aaa + ".dat"
     print(url1)
@@ -65,7 +65,7 @@ for row in ymd:
         #       i4['ZD1_CHG'], i4['ZD2_CHG'], i4['VOLUME'], i4['OPENINTEREST'], i4['OPENINTERESTCHG'], i4['ORDERNO'],
         #       i4['ORDERNO2'])
 
-        with open('kx.csv', 'a') as f:
+        with open('data/kx.csv', 'a') as f:
             f.write(
                 data0 + ',' + i4['PRODUCTID'] + ',' + i4['DELIVERYMONTH'] + ',' + str(
                     i4['PRESETTLEMENTPRICE']) + ',' + str(i4['OPENPRICE']) + ',' + str(i4['HIGHESTPRICE']) + ',' + str(

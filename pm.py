@@ -7,20 +7,20 @@ import requests
 
 # 文件初始化，写入表头
 # 当日交易排名表，pm1.csv
-with open('pm1.csv', 'w') as f:
+with open('data/pm1.csv', 'w') as f:
     f.write('日期,名次,期货公司名称,期货名称,合约代码,成交量,增减量' + '\n')
 # 持多仓排名表，pm2.csv
-with open('pm2.csv', 'w') as f:
+with open('data/pm2.csv', 'w') as f:
     f.write('日期,名次,期货公司名称,期货名称,合约代码,持买单,增减量' + '\n')
 # 持空仓排名表，pm3.csv
-with open('pm3.csv', 'w') as f:
+with open('data/pm3.csv', 'w') as f:
     f.write('日期,名次,期货公司名称,期货名称,合约代码,持卖单,增减量' + '\n')
 
 
 
 
 #2019A.csv里是2018年至今的交易日历
-ymd = csv.reader(open("2019A.csv"))
+ymd = csv.reader(open("data0/2019A.csv"))
 
 
 for row in ymd:
@@ -44,18 +44,18 @@ for row in ymd:
     jsonbj1 = json.loads(requests.get(url1, headers=headers).text)
     # 期货交易排名放在pm1.csv
     for i1 in jsonbj1['o_cursor']:
-        with open('pm1.csv', 'a') as f:
+        with open('data/pm1.csv', 'a') as f:
             f.write(data0 + ',' + str(i1['RANK']) + ',' + i1['PARTICIPANTABBR1'] + ',' + i1['PRODUCTNAME'] + ',' + i1[
                 'INSTRUMENTID'] + ',' + str(i1['CJ1']) + ',' + str(i1['CJ1_CHG']) + '\n')
 
     # 期货持多仓量变化保存在 pm2.csv
     for i2 in jsonbj1['o_cursor']:
-        with open('pm2.csv', 'a') as f:
+        with open('data/pm2.csv', 'a') as f:
             f.write(data0 + ',' + str(i2['RANK']) + ',' + i2['PARTICIPANTABBR2'] + ',' + i2['PRODUCTNAME'] + ',' + i2[
                 'INSTRUMENTID'] + ',' + str(i2['CJ2']) + ',' + str(i2['CJ2_CHG']) + '\n')
 
     # 期货持空仓量变化保存在 pm3.csv
     for i3 in jsonbj1['o_cursor']:
-        with open('pm3.csv', 'a') as f:
+        with open('data/pm3.csv', 'a') as f:
             f.write(data0 + ',' + str(i3['RANK']) + ',' + i3['PARTICIPANTABBR3'] + ',' + i3['PRODUCTNAME'] + ',' + i3[
                 'INSTRUMENTID'] + ',' + str(i3['CJ3']) + ',' + str(i3['CJ3_CHG']) + '\n')
